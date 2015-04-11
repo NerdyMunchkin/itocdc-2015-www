@@ -74,10 +74,10 @@
               if(checkIE() != 0) {
                 var objFSO = new ActiveXObject("Scripting.FileSystemObject"); var filePath = $("#" + fileid)[0].value;
                 var objFile = objFSO.getFile(filePath);
-                var fileSize = objFile.size; //size in kb
+                var fileSize = objFile.size; //size in bytes
                 fileSize = fileSize / 1048576; //size in mb 
               } else {
-                fileSize = $("#" + fileid)[0].files[0].size //size in kb
+                fileSize = $("#" + fileid)[0].files[0].size //size in bytes
                 fileSize = fileSize / 1048576; //size in mb 
               }
               return fileSize;
