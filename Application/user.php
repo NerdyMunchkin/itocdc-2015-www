@@ -96,7 +96,6 @@
       <?php if(isset($_COOKIE["PHPSESSID"])): ?>
         <h1>Account Information</h1>
         <p><b>Username: </b> <?php echo $username; ?></p>
-        <p><b>Email: </b> <?php echo $email; ?></p>
       <?php endif; ?>
       <?php
         if($userID){
