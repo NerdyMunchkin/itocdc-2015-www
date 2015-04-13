@@ -115,10 +115,10 @@
             echo "<p>$views views since $posted</p><br />";
           }
           if($postedClips == FALSE){
-            echo "<p>This user hasn't posted any videos :(</p>";
+            echo "<p>This user hasn't posted any videos. :(</p>";
           }
         } else {
-          echo "<h1>Sorry we couldn't find that user :(</h1>";
+          echo "<h1>Sorry, we couldn't find that user. :(</h1>";
         }
       ?>
       </center>
