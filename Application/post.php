@@ -111,9 +111,13 @@
                 return false;
             }
             if(getFilesize("video") > 100){
-                alert("Video is too large to upload!");
+                alert("Video is too large to upload! Please make sure the video file is smaller than 100 megabytes.");
                 return false;
             }
+            //if(false){ //TODO: check for invalid file signatures for ogg, mp4, and webm.
+            //    alert("The video file is invalid!")
+            //    return false;
+            //}
             
             return true;
          }
