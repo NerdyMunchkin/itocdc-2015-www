@@ -10,23 +10,12 @@ function generateShortName($length = 11) {
     return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
 }
 
+
 if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
 
   // check for failed/corrupted post
-  if(!isset($_POST["title"]) && !isset($_POST["title"]) && !isset($_POST["video"])){
-    header("Location: /post.php?message=" . urlencode("Upload failed, check video file."));
-    exit();
-  }
-
-  // check title
-  if(!isset($_POST["title"])){
-    header("Location: /post.php?message=" . urlencode("Missing title."));
-    exit();
-  }
-
-  // check description
-  if(!isset($_POST["description"])){
-    header("Location: /post.php?message=" . urlencode("Missing description."));
+  if(!isset($_POST["video"]) || !isset($_POST["title"]) || !isset($_POST["description"])){
+    header("Location: /post.php?message=" . urlencode("Upload failed."));
     exit();
   }
 
