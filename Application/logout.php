@@ -1,5 +1,6 @@
 <?php
 // clear session
-setcookie("PHPSESSID", "", time()-3600);
+if (isset($_COOKIE['PHPSESSID'])) {
+unset($_COOKIE['PHPSESSID']);
 header('Location: /index.php');
 ?>
