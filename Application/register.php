@@ -20,11 +20,11 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     exit();
 }
 
-// get user data from the users table
-$result = mysql_query("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
+$insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
+$insert->execute();
 
 // register user
-if ($result) {
+if ($insert->rowCount()) {
     // successfully created user, set an active cookie for this username
     setcookie("PHPSESSID", authenticated_session($email), time()+3600);
     setcookie("user", $email, time()+3600);
