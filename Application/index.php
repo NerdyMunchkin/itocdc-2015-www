@@ -80,11 +80,13 @@
 
         $N = 60;
         // get top N trending videos
-        $clipsResult = mysql_query("SELECT host, title, shortname, posted, views FROM clips ORDER BY views DESC, posted DESC LIMIT $N");
-        if(mysql_num_rows($clipsResult) > 0){
+        $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips ORDER BY views DESC, posted DESC LIMIT :max');
+        $query->bindParam(':max', $N, PDO::PARAM_INT);
+        $query->execute();
+        if($query->rowCount() > 0){
           $counter = 1;
           echo "<tr>";
-          while($clipsRow = mysql_fetch_row($clipsResult)){
+          while($clipsRow = $query->fetch()){
             $host = $clipsRow[0];
             $title = $clipsRow[1];
             $shortname = $clipsRow[2];

@@ -58,20 +58,24 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
   // check user authentication
   if(isset($_COOKIE["PHPSESSID"]) && isset($_COOKIE["user"])){
     try {
-      $userResult = mysql_query("SELECT id FROM users WHERE email='" . $_COOKIE["user"] . "'");
-      $userRow = mysql_fetch_row($userResult);
+      $query = $db->prepare('SELECT if FROM users WHERE email=:email');
+      $query->bindParam(':email', $_COOKIE["user"], strlen($_COOKIE["user"]));
+      $query->execute();
+      $userRow = $query->fetch();
       $userID = $userRow[0];
 
       // insert video into clips table
       $insertResult = mysql_query("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES ('$APPLICATION_HOSTNAME', '$shortname', '$title', '$description', '$userID', '$extension')");
-      if ($insertResult) {
-        // success! view the video
-        header("Location: /view.php?video=" . $shortname);
-        exit();
-      } else {
-        header('Location: /post.php?message=' . urlencode(mysql_error($conn)));
-        exit();
-      }
+      $query = $db->prepare("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES (':hostname', ':shortname', ':title', ':description', ':userID', ':extension')");
+      $query->bindParam(':hostname', $APPLICATION_HOSTNAME, strlen($APPLICATION_HOSTNAME));
+      $query->bindParam(':shortname', $shortname, strlen($shortname));
+      $query->bindParam(':title', $title, strlen($shortname));
+      $query->bindParam(':description', $description, strlen($description));
+      $query->bindParam(':userID', $userID, strlen($userID));
+      $query->bindParam(':extension', $extension, strlen($extension));
+      //TODO: add SQL error handling
+      header("Location: /view.php?video=" . $shortname);
+      exit();
     } catch (Exception $e) {
       header("Location: /post.php?message=" . urlencode("Error: " . $e));
       exit();

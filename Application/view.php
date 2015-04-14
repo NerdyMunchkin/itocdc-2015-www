@@ -11,12 +11,14 @@ $shortname = $_GET["video"];
 
 try {
     // get clip properties
-    $clipResult = mysql_query("SELECT host, title, description, posted, user, views, extension FROM clips WHERE shortname='" . $shortname . "'");
+    $query = $db->prepare("SELECT host, title, description, posted, user, views, extension FROM clips WHERE shortname=':shortname'");
+    $query->bindParam(':shortname', $shortname, strlen($shortname));
+    $query->execute();
 
-    if(mysql_num_rows($clipResult) == 0){
+    if($query->rowCount() == 0){
         $clip = NULL;
     } else {
-        $clipRow = mysql_fetch_row($clipResult);
+        $clipRow = $query->fetch();
         $host = $clipRow[0];
         $shareURL = "http://$WEBSITE_DOMAIN_NAME/view.php?video=$shortname";
         $title = $clipRow[1];
@@ -27,15 +29,19 @@ try {
         $extension = $clipRow[6];
 
         // get username
-        $userResult = mysql_query("SELECT username FROM users WHERE id='" . $userID . "'");
-        $userRow = mysql_fetch_row($userResult);
+        $query = $db->prepare("SELECT username FROM users WHERE id=':user'");
+        $query->bindParam(':user', $userID);
+        $query->execute();
+        $userRow = $query->fetch();
         $username = $userRow[0];
 
         // set the clip the filename
         $clip = "$shortname.$extension";
 
         // update view counter
-        mysql_query("UPDATE clips SET views=views+1 WHERE shortname='" . $shortname . "'");
+        $update = $db->prepare("UPDATE clips SET views=views+1 WHERE shortname=':shortname'");
+        $update.bindParam(':shortname', $shortname, strlen($shortname));
+        $update.execute();
     }
     
   } catch (Exception $e) {

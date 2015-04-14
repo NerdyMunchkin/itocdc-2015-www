@@ -1,7 +1,6 @@
 <?php
 // opens the database connection
-$conn = mysql_connect($DATABASE_IP, $DATABASE_USERNAME, $DATABASE_PASSWORD) or die ('Error connecting to mysql');
+$db = new PDO("mysql:host=$DATABASE_IP;dbname=$DATABASE_NAME", $username, $password);
 
-// connects to the specific database on the MySQL server
-mysql_select_db($DATABASE_NAME);
+//TODO: Error handling
 ?>

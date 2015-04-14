@@ -11,11 +11,13 @@ $password=$_POST["password"];
 include 'config.php';
 include 'opendb.php';
 
-// get user data from the users table (assumes users table already exists!)
-$result = mysql_query("SELECT * FROM users WHERE email='" . $email . "'" . " AND password=" . "'" . $password . "'");
+$query = $db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
+$query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
+$query->bindParam(':password', $password, PDO::PARAM_STR, strlen($password));
+$query->execute();
 
 // authenticate user
-$login = mysql_num_rows($result) > 0;
+$login = $query->rowCount();
 
 if($login){
   // set an active cookie for this username

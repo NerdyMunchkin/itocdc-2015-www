@@ -11,12 +11,14 @@
 
   try {
     // get clip properties
-    $userResult = mysql_query("SELECT id, email FROM users WHERE username='" . $username . "'");
+    $query = $db->prepare("SELECT id, email FROM users WHERE username=':username'");
+    $query->bindParam(':username', $username, strlen($username));
+    $query->execute();
 
-    if(mysql_num_rows($userResult) == 0){
+    if($query->rowCount() == 0){
         $userID = NULL;
     } else {
-        $userRow = mysql_fetch_row($userResult);
+        $userRow = $query->fetch();
         $userID = $userRow[0];
         $email = $userRow[1];
     }
@@ -101,9 +103,10 @@
         if($userID){
           echo "<h1>User Videos</h1>";
           // get user videos
-          $clipsResult = mysql_query("SELECT host, title, shortname, posted, views FROM clips WHERE user='" . $userID . "' ORDER BY views DESC, posted DESC");
+          $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
+          $query->bindParam(':user', $userID);
           $postedClips = FALSE;
-          while($clipsRow = mysql_fetch_row($clipsResult)){
+          while($clipsRow = $query->fetch()){
             $postedClips = TRUE;
             $host = $clipsRow[0];
             $title = $clipsRow[1];
