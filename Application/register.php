@@ -12,6 +12,14 @@ $password=$_POST["password"];
 // open connection to the database
 include 'opendb.php';
 
+if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+    header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
+    exit();
+}else if(!ctype_alnum($username)){
+    header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
+    exit();
+}
+
 // get user data from the users table
 $result = mysql_query("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
 
