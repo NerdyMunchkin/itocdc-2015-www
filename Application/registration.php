@@ -63,6 +63,7 @@
      <h1>Login</h1>
      <script>
         function checkRegistration(){
+         
             if (document.registration.email.value.length==0){
                 alert("Please enter email!");
                 return false;
@@ -71,6 +72,10 @@
                 alert("Please enter password!");
                 return false;
             }
+             if(document.registration.password.value.length<6){
++                alert("Too short, 6 character minimum!");
++                return false;
++            }
             if(document.registration.confirm-password.value != document.registration.password.value){
                  alert("Passwords do not match!");
                  return false;
