@@ -123,6 +123,7 @@
         } else {
           echo "<h1>Sorry, we couldn't find that user. :(</h1>";
         }
+        include 'closedb.php'
       ?>
       </center>
       <!-- FOOTER -->
