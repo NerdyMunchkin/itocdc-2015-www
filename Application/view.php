@@ -47,6 +47,7 @@ try {
   } catch (Exception $e) {
     $clip = NULL;
   }
+  include 'closedb.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
