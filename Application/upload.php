@@ -56,10 +56,11 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
   $description = $_POST["description"];
 
   // check user authentication
-  if(isset($_COOKIE["PHPSESSID"]) && isset($_COOKIE["user"])){
+  $email = is_authenticated($_COOKIE["PHPSESSID"]);
+  if($email){
     try {
       $query = $db->prepare('SELECT if FROM users WHERE email=:email');
-      $query->bindParam(':email', $_COOKIE["user"], strlen($_COOKIE["user"]));
+      $query->bindParam(':email', $email, strlen($email));
       $query->execute();
       $userRow = $query->fetch();
       $userID = $userRow[0];
