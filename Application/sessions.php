@@ -12,11 +12,13 @@
     $login = $query->rowCount();
     if($login){
       $sessid = authenticated_session($passwd);
-      if(file_exists($sessid)){
+      if(file_exists($sessid) or file_exists($sessid . '.time')){
         header('Location: /login.php?message=Already%20logged%20in%20elsewhere');
       }else{
         $userfile = fopen($sessid, "w");
+        $timefile = fopen($sessid . '.time', "w");
         fwrite($userfile, $email);
+        fwrite($userfile, time()+3600);
         setcookie("PHPSESSID", $sessid, time()+3600);
         header('Location: /index.php');
       }
@@ -26,11 +28,34 @@
     }
   }
   
+  function logout($id) {
+    $userfile = fopen($id, "r+");
+    $timefile = fopen($id . '.time', "r+");
+    delete($userfile);
+    delete($timefile);
+    setcookie("PHPSESSID", $id, time()-7200);
+  }
+  
   function is_authenticated($id) {
-    if(file_exists($id)){
-      $userfile = fopen($id, "r");
-      return fread($userfile, filesize($userfile));
+    if(file_exists($id) and file_exists($id . '.time')){
+      $userfile = fopen($id, "r+");
+      $timefile = fopen($id . '.time', "r+");
+      if(fread($timefile, filesize($timefile)) < time()){
+        delete($userfile);
+        delete($timefile);
+        return false;
+      }else{
+        return fread($userfile, filesize($userfile));
+      }
     }else{
+      if(file_exists($id)){
+        $userfile = fopen($id, "r+");
+        delete($userfile);
+      }
+      if(file_exists($id . '.time')){
+        $timefile = fopen($id . '.time', "r+");
+        delete($timefile);
+      }
       return false;
     }
   }
