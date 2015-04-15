@@ -102,23 +102,27 @@
       <?php
         if($userID){
           echo "<h1>User Videos</h1>";
-          // get user videos
-          $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
-          $query->bindParam(':user', $userID);
-          $postedClips = FALSE;
-          while($clipsRow = $query->fetch()){
-            $postedClips = TRUE;
-            $host = $clipsRow[0];
-            $title = $clipsRow[1];
-            $shortname = $clipsRow[2];
-            $posted = $clipsRow[3];
-            $views = $clipsRow[4];
-            echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
-            echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
-            echo "<p>$views views since $posted</p><br />";
-          }
-          if($postedClips == FALSE){
-            echo "<p>This user hasn't posted any videos. :(</p>";
+          try{
+            // get user videos
+            $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
+            $query->bindParam(':user', $userID);
+            $postedClips = FALSE;
+            while($clipsRow = $query->fetch()){
+              $postedClips = TRUE;
+              $host = $clipsRow[0];
+              $title = $clipsRow[1];
+              $shortname = $clipsRow[2];
+              $posted = $clipsRow[3];
+              $views = $clipsRow[4];
+              echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
+              echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
+              echo "<p>$views views since $posted</p><br />";
+            }
+            if($postedClips == FALSE){
+              echo "<p>This user hasn't posted any videos. :(</p>";
+            }
+          } catch(Exception $e){
+            echo "<p>Error: $e";
           }
         } else {
           echo "<h1>Sorry, we couldn't find that user. :(</h1>";
