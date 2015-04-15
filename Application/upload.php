@@ -52,8 +52,8 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
   rename("$uploadDir/$filename", "$uploadDir/$shortname.$extension"); 
 
   // save input fields
-  $title = $_POST["title"];
-  $description = $_POST["description"];
+  $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
+  $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
 
   // check user authentication
   if(isset($_COOKIE["PHPSESSID"]) && isset($_COOKIE["user"])){
