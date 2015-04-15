@@ -32,7 +32,7 @@ try{
     header('Location: /login.php?message=Login%20Failed');
   }
 } catch(Exception $e){
-  header("Location: /post.php?message=" . urlencode("Error: " . $e));
+  header("Location: /login.php?message=" . urlencode("Error: " . $e));
   exit();
 }
 
