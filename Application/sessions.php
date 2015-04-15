@@ -1,5 +1,5 @@
 <?php
-  function authenticated_session($username) {
-    return sha1(md5($username));
+  function authenticated_session($passwd) {
+    return hash("sha256", hash("sha256", passwd));
   }
 ?>
