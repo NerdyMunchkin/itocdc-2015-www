@@ -18,6 +18,15 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
 }else if(!ctype_alnum($username)){
     header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
     exit();
+} 
+
+$query = $db->prepare("SELECT username FROM users WHERE username=':username'");
+$query->bindParam(':username', $username, strlen($username));
+$query->execute();
+
+if($query->rowCount() > 0) {
+    header('Location: /registration.php?message=' . urlencode('Username taken!'));
+    exit();
 }
 
 $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
