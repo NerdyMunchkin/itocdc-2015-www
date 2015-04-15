@@ -11,6 +11,11 @@ $password=$_POST["password"];
 include 'config.php';
 include 'opendb.php';
 
+if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+  header('Location: /login.php?message=Invalid%20input');
+  exit();
+}
+
 $query = $db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
 $query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
 $query->bindParam(':password', $password, PDO::PARAM_STR, strlen($password));
