@@ -104,6 +104,8 @@
         } else {
           echo "<h1>Coming soon!</h1>";
         }
+        
+        include 'closedb.php'
       ?>
       </table>
       </center>
