@@ -108,6 +108,8 @@
         } catch(Exception $e){
           echo "<h1>Error: $e</h1>";
         }
+        
+        include 'closedb.php'
       ?>
       </table>
       </center>

@@ -89,5 +89,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
   header("Location: /post.php?message=" . urlencode("No video imported."));
   exit();
 }
+
+include 'closedb.php'
 ?>
 
