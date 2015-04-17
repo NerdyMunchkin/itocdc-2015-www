@@ -5,11 +5,11 @@
 // open connection to the database
 include 'opendb.php';
 
-$clip = NULL;
-$media = $mediaDir;
-$shortname = $_GET["video"];
-
 try {
+    $clip = NULL;
+    $media = $mediaDir;
+    $shortname = $_GET["video"];
+    
     // get clip properties
     $query = $db->prepare("SELECT host, title, description, posted, user, views, extension FROM clips WHERE shortname=':shortname'");
     $query->bindParam(':shortname', $shortname, strlen($shortname));
