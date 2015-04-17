@@ -18,7 +18,7 @@
         $userfile = fopen($sessid, "w");
         $timefile = fopen($sessid . '.time', "w");
         fwrite($userfile, $email);
-        fwrite($userfile, time()+3600);
+        fwrite($timefile, time()+3600);
         setcookie("PHPSESSID", $sessid, time()+3600);
         header('Location: /index.php');
       }
@@ -45,6 +45,9 @@
         delete($timefile);
         return false;
       }else{
+        $timefile = fopen($sessid . '.time', "w");
+        fwrite($timefile, time()+3600);
+        setcookie("PHPSESSID", $sessid, time()+3600);
         return fread($userfile, filesize($userfile));
       }
     }else{
