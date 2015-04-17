@@ -10,6 +10,7 @@ $password=$_POST["password"];
 // open connection to the database
 include 'config.php';
 include 'opendb.php';
+include 'password.php';
 
 $hashPass = password_hash($password, PASSWORD_DEFAULT);
 
