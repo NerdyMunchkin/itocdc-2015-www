@@ -45,8 +45,9 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
         shell_exec("ffmpeg -i \"$uploadDir/$shortname.$extension\" -ss 00:00:04 -f image2 -s qvga \"$uploadDir/$shortname.png\"");
       
         // save input fields
-        $title = $_POST["title"];
-        $description = $_POST["description"];
+        $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
+        $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
+
         try {
           $query = $db->prepare('SELECT if FROM users WHERE email=:email');
           $query->bindParam(':email', $_COOKIE["user"], strlen($_COOKIE["user"]));

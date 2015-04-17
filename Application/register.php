@@ -19,6 +19,9 @@ try{
     }else if(!ctype_alnum($username)){
         header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
+    }else if(strlen($password) < 6){
+        header('Location: /registration.php?message=' . urlencode('Password too short!'));
+        exit();
     }
 
     $query = $db->prepare("SELECT username FROM users WHERE username=':username'");
