@@ -6,22 +6,23 @@ include 'sessions.php';
 // open connection to the database
 include 'opendb.php';
 
-function generateShortName($length = 11) {
-    return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
+function generateShortName($file) {
+    return hash('sha256', fread($file, filesize($file)));
 }
 
 
 if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
-  if(isset($_POST["video"]) || isset($_POST["title"]) || isset($_POST["description"])){
+    if(isset($_POST["video"]) || isset($_POST["title"]) || isset($_POST["description"])){
       if(isset($_COOKIE["PHPSESSID"]) && isset($_COOKIE["user"])){
         // get filename
         $filename = $_FILES["video"]["name"];
       
         // generate unique shortname for upload
-        $shortname = generateShortName();
+        $shortname = generateShortName($_FILES["video"]["name']);
         $extension = pathinfo($_FILES["video"]["name"], PATHINFO_EXTENSION);
-        while(file_exists("$uploadDir/$shortname.$extension")){
-          $shortname = generateShortName();
+        if(file_exists("$uploadDir/$shortname.$extension")){
+          header("Location: /post.php?message=" . urlencode("Video already posted."));
+          exit();
         }
       
         // check file type
