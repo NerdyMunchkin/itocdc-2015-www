@@ -21,6 +21,15 @@ try{
         exit();
     }
 
+    $query = $db->prepare("SELECT username FROM users WHERE username=':username'");
+    $query->bindParam(':username', $username, strlen($username));
+    $query->execute();
+
+    if($query->rowCount() > 0) {
+        header('Location: /registration.php?message=' . urlencode('Username taken!'));
+        exit();
+    }
+
     $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
     $insert->execute();
 	
