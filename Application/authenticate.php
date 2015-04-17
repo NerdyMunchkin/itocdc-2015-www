@@ -11,12 +11,14 @@ $password=$_POST["password"];
 include 'config.php';
 include 'opendb.php';
 
+$hashPass = password_hash($password, PASSWORD_DEFAULT);
+
 if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   header('Location: /login.php?message=Invalid%20input');
   exit();
 }
 
-authenticate($email, $passwd);
+authenticate($email, $hashPass);
 
 // close connection to the database
 include 'closedb.php';
