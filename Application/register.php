@@ -3,6 +3,7 @@
 include 'headers.php';
 include 'sessions.php';
 include 'config.php';
+include 'password.php';
 
 // get POST information from login form
 $email=$_POST["email"];
