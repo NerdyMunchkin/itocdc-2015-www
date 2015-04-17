@@ -72,15 +72,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Completely Digital Clips</a>
+              <a class="navbar-brand" href="index.php">Completely Digital Clips</a>
               <?php echo "<!-- Hosted by $APPLICATION_HOSTNAME -->"; ?>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
-                  <li><a href="/post.php">Post Video</a></li>
-                  <li><a href="/logout.php">Logout</a></li>
+                  <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <li><a href="/post.php">Post Video</a></li>
+                    <li><a href="/logout.php">Logout</a></li>
+                  <?php else: ?>
+                    <li><a href="/login.php">Login</a></li>
+                    <li><a href="/registration.php">Register</a></li>
+                  <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
                   <li><a href="/registration.php">Register</a></li>
@@ -95,34 +100,39 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-      <?php if(isset($_COOKIE["PHPSESSID"])): ?>
+      <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
         <h1>Account Information</h1>
         <p><b>Username: </b> <?php echo $username; ?></p>
       <?php endif; ?>
       <?php
         if($userID){
           echo "<h1>User Videos</h1>";
-          // get user videos
-          $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
-          $query->bindParam(':user', $userID);
-          $postedClips = FALSE;
-          while($clipsRow = $query->fetch()){
-            $postedClips = TRUE;
-            $host = $clipsRow[0];
-            $title = $clipsRow[1];
-            $shortname = $clipsRow[2];
-            $posted = $clipsRow[3];
-            $views = $clipsRow[4];
-            echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
-            echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
-            echo "<p>$views views since $posted</p><br />";
-          }
-          if($postedClips == FALSE){
-            echo "<p>This user hasn't posted any videos. :(</p>";
+          try{
+            // get user videos
+            $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
+            $query->bindParam(':user', $userID);
+            $postedClips = FALSE;
+            while($clipsRow = $query->fetch()){
+              $postedClips = TRUE;
+              $host = $clipsRow[0];
+              $title = $clipsRow[1];
+              $shortname = $clipsRow[2];
+              $posted = $clipsRow[3];
+              $views = $clipsRow[4];
+              echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
+              echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
+              echo "<p>$views views since $posted</p><br />";
+            }
+            if($postedClips == FALSE){
+              echo "<p>This user hasn't posted any videos. :(</p>";
+            }
+          } catch(Exception $e){
+            echo "<p>Error: $e";
           }
         } else {
           echo "<h1>Sorry, we couldn't find that user. :(</h1>";
         }
+        include 'closedb.php'
       ?>
       </center>
       <!-- FOOTER -->
