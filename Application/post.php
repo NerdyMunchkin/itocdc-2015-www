@@ -1,6 +1,7 @@
 <?php
   include 'config.php';
   include 'headers.php';
+  var MAXFILESIZE = 100;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,8 +111,8 @@
                 alert("Please select a video to upload!");
                 return false;
             }
-            if(getFilesize("video") > 100){
-                alert("Video is too large to upload! Please make sure the video file is smaller than 100 megabytes.");
+            if(getFilesize("video") > $MAXFILESIZE){
+                alert("Video is too large to upload! Please make sure the video file is smaller than $MAXFILESIZE megabytes.");
                 return false;
             }
             //if(false){ //TODO: check for invalid file signatures for ogg, mp4, and webm.
@@ -140,7 +141,8 @@
        <br />
        <br />
        <label for="video">Video File</label><br />
-       <input type="file" name="video" id="video">
+       <input type="file" name="video" id="video"><br />
+       Max file size: <?php echo "$MAXFILESIZE" ?> megabytes
        <br />
        <input value="Post" type="submit">
      </form>
