@@ -32,8 +32,8 @@ try{
         header('Location: /registration.php?message=' . urlencode('Username taken!'));
         exit();
     }
-
-    $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$hash')");
     $insert->execute();
 	
     // register user
