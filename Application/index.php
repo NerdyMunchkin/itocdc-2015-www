@@ -1,6 +1,7 @@
 <?php
   include 'config.php';
   include 'headers.php';
+  include 'sessions.php';
 
   $media = $mediaDir;
 ?>
@@ -56,8 +57,13 @@
               <ul class="nav navbar-nav">
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
-                  <li><a href="/post.php">Post Video</a></li>
-                  <li><a href="/logout.php">Logout</a></li>
+                  <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <li><a href="/post.php">Post Video</a></li>
+                    <li><a href="/logout.php">Logout</a></li>
+                  <?php else: ?>
+                    <li><a href="/login.php">Login</a></li>
+                    <li><a href="/registration.php">Register</a></li>
+                  <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
                   <li><a href="/registration.php">Register</a></li>

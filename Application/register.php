@@ -20,19 +20,16 @@ try{
         header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
     }
-    
+
     $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')");
     $insert->execute();
-    
+	
     // register user
     if ($insert->rowCount()) {
-        // successfully created user, set an active cookie for this username
-        setcookie("PHPSESSID", authenticated_session($email), time()+3600);
-        setcookie("user", $email, time()+3600);
-        header('Location: /index.php');
+    authenticate($email, $password);
     } else {
         header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
-    }
+    } 
 } catch(Exception $e) {
     header("Location: /registration.php?message=" . urlencode("Error: " . $e));
 }

@@ -79,8 +79,13 @@
               <ul class="nav navbar-nav">
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
-                  <li><a href="/post.php">Post Video</a></li>
-                  <li><a href="/logout.php">Logout</a></li>
+                  <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <li><a href="/post.php">Post Video</a></li>
+                    <li><a href="/logout.php">Logout</a></li>
+                  <?php else: ?>
+                    <li><a href="/login.php">Login</a></li>
+                    <li><a href="/registration.php">Register</a></li>
+                  <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
                   <li><a href="/registration.php">Register</a></li>
@@ -95,7 +100,7 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-      <?php if(isset($_COOKIE["PHPSESSID"])): ?>
+      <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
         <h1>Account Information</h1>
         <p><b>Username: </b> <?php echo $username; ?></p>
       <?php endif; ?>
