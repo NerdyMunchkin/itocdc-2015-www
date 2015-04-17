@@ -45,15 +45,20 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Completely Digital Clips</a>
+              <a class="navbar-brand" href="index.php">Completely Digital Clips</a>
               <?php echo "<!-- Hosted by $APPLICATION_HOSTNAME -->"; ?>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
-                  <li><a href="/logout.php">Logout</a></li>
-                  <li><a href="/post.php">Post Video</a></li>
+                  <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <li><a href="/post.php">Post Video</a></li>
+                    <li><a href="/logout.php">Logout</a></li>
+                  <?php else: ?>
+                    <li><a href="/login.php">Login</a></li>
+                    <li><a href="/registration.php">Register</a></li>
+                  <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
                   <li><a href="/registration.php">Register</a></li>
