@@ -50,7 +50,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Completely Digital Clips</a>
+              <a class="navbar-brand" href="index.php">Completely Digital Clips</a>
               <?php echo "<!-- Hosted by $APPLICATION_HOSTNAME -->"; ?>
             </div>
             <div class="navbar-collapse collapse">
@@ -85,31 +85,37 @@
         include 'opendb.php';
 
         $N = 60;
-        // get top N trending videos
-        $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips ORDER BY views DESC, posted DESC LIMIT :max');
-        $query->bindParam(':max', $N, PDO::PARAM_INT);
-        $query->execute();
-        if($query->rowCount() > 0){
-          $counter = 1;
-          echo "<tr>";
-          while($clipsRow = $query->fetch()){
-            $host = $clipsRow[0];
-            $title = $clipsRow[1];
-            $shortname = $clipsRow[2];
-            $posted = $clipsRow[3];
-            $views = $clipsRow[4];
-            echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a><p><b>$views views since <i>$posted</i></b></p></td>";
-            if($counter == 3){
-              echo "</tr><tr>";
-              $counter = 1;
-            } else {
-              $counter = $counter + 1;
+        try{
+          // get top N trending videos
+          $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips ORDER BY views DESC, posted DESC LIMIT :max');
+          $query->bindParam(':max', $N, PDO::PARAM_INT);
+          $query->execute();
+          if($query->rowCount() > 0){
+            $counter = 1;
+            echo "<tr>";
+            while($clipsRow = $query->fetch()){
+              $host = $clipsRow[0];
+              $title = $clipsRow[1];
+              $shortname = $clipsRow[2];
+              $posted = $clipsRow[3];
+              $views = $clipsRow[4];
+              echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a><p><b>$views views since <i>$posted</i></b></p></td>";
+              if($counter == 3){
+                echo "</tr><tr>";
+                $counter = 1;
+              } else {
+                $counter = $counter + 1;
+              }
             }
+            echo "</tr>";
+          } else {
+            echo "<h1>Coming soon!</h1>";
           }
-          echo "</tr>";
-        } else {
-          echo "<h1>Coming soon!</h1>";
+        } catch(Exception $e){
+          echo "<h1>Error: $e</h1>";
         }
+        
+        include 'closedb.php'
       ?>
       </table>
       </center>
