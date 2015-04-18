@@ -15,13 +15,13 @@ include 'opendb.php';
 
 try{
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
+        //header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
         exit();
     }else if(!ctype_alnum($username)){
-        header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
+        //header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
     }else if(strlen($password) < 6){
-        header('Location: /registration.php?message=' . urlencode('Password too short!'));
+        //header('Location: /registration.php?message=' . urlencode('Password too short!'));
         exit();
     }
 
@@ -30,7 +30,7 @@ try{
     $query->execute();
 
     if($query->rowCount() > 0) {
-        header('Location: /registration.php?message=' . urlencode('Username taken!'));
+        //header('Location: /registration.php?message=' . urlencode('Username taken!'));
         exit();
     }
     $hash = password_hash($password, PASSWORD_DEFAULT);
