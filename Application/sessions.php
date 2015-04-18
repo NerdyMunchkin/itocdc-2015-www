@@ -2,7 +2,7 @@
   function authenticated_session($passwd) {
     return hash("sha256", hash("sha256", passwd));
   }
-  
+  include 'opendb.php';
   function authenticate($email, $passwd) {
     $query = $db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
     $query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
@@ -26,6 +26,7 @@
       setcookie("PHPSESSID", authenticated_session($passwd), time()-7200);
       header('Location: /login.php?message=Login%20Failed');
     }
+    include 'closedb.php';
   }
   
   function logout($id) {
