@@ -30,10 +30,8 @@
   }
   
   function logout($id) {
-    $userfile = fopen($id, "r+");
-    $timefile = fopen($id . '.time', "r+");
-    delete($userfile);
-    delete($timefile);
+    delete($id);
+    delete($id . '.time');
     setcookie("PHPSESSID", $id, time()-7200);
   }
   
@@ -41,24 +39,22 @@
     if(file_exists($id) and file_exists($id . '.time')){
       $userfile = fopen($id, "r+");
       $timefile = fopen($id . '.time', "r+");
-      if(fread($timefile, filesize($timefile)) < time()){
-        delete($userfile);
-        delete($timefile);
+      if(fread($timefile, filesize($id . '.time')) < time()){
+        unlink($id);
+        unlink($id . '.time');
         return false;
       }else{
         $timefile = fopen($sessid . '.time', "w");
         fwrite($timefile, time()+3600);
         setcookie("PHPSESSID", $sessid, time()+3600);
-        return fread($userfile, filesize($userfile));
+        return fread($userfile, filesize($id));
       }
     }else{
       if(file_exists($id)){
-        $userfile = fopen($id, "r+");
-        delete($userfile);
+        unlink($id);
       }
       if(file_exists($id . '.time')){
-        $timefile = fopen($id . '.time', "r+");
-        delete($timefile);
+        unlink($id . '.time');
       }
       return false;
     }
