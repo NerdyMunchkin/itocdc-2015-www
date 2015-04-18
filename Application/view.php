@@ -1,7 +1,7 @@
 <?php
   include 'config.php';
   include 'headers.php';
-  include 'sessions.php'
+  include 'sessions.php';
 
 // open connection to the database
 include 'opendb.php';
