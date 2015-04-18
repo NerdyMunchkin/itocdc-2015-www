@@ -7,18 +7,18 @@ include 'sessions.php';
 include 'opendb.php';
 
 function generateShortName($file) {
-    return hash('sha256', fread($file, filesize($file)));
+    return hash('sha256', fread(fopen($file, "a+"), filesize($file)));
 }
 
 
 if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
     if(isset($_POST["video"]) || isset($_POST["title"]) || isset($_POST["description"])){
-      if(isset($_COOKIE["PHPSESSID"]) && isset($_COOKIE["user"])){
+      if(is_authenticated($_COOKIE["PHPSESSID"])){
         // get filename
         $filename = $_FILES["video"]["name"];
       
         // generate unique shortname for upload
-        $shortname = generateShortName($_FILES["video"]["name']);
+        $shortname = generateShortName($_FILES["video"]["name"]);
         $extension = pathinfo($_FILES["video"]["name"], PATHINFO_EXTENSION);
         if(file_exists("$uploadDir/$shortname.$extension")){
           header("Location: /post.php?message=" . urlencode("Video already posted."));
@@ -76,7 +76,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
         exit();
       }
   } else {
-    header("Location: /post.php?message=" . urlencode("Upload failed."));
+    //header("Location: /post.php?message=" . urlencode("Upload failed."));
     exit();
   }
 } else {
