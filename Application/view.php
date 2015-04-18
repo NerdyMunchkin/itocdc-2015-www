@@ -30,7 +30,7 @@ try {
         $extension = $clipRow[6];
 
         // get username
-        $query = $db->prepare("SELECT username FROM users WHERE id=':user'");
+        $query = $db->prepare("SELECT username FROM users WHERE id=:user");
         $query->bindParam(':user', $userID);
         $query->execute();
         $userRow = $query->fetch();
@@ -40,7 +40,7 @@ try {
         $clip = "$shortname.$extension";
 
         // update view counter
-        $update = $db->prepare("UPDATE clips SET views=views+1 WHERE shortname=':shortname'");
+        $update = $db->prepare("UPDATE clips SET views=views+1 WHERE shortname=:shortname");
         $update->bindParam(':shortname', $shortname, strlen($shortname));
         $update->execute();
     }
