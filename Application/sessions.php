@@ -44,9 +44,9 @@
         unlink($id . '.time');
         return false;
       }else{
-        $timefile = fopen($sessid . '.time', "w");
+        $timefile = fopen($id . '.time', "w");
         fwrite($timefile, time()+3600);
-        setcookie("PHPSESSID", $sessid, time()+3600);
+        setcookie("PHPSESSID", $id, time()+3600);
         return fread($userfile, filesize($id));
       }
     }else{
