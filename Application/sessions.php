@@ -35,6 +35,15 @@
     setcookie("PHPSESSID", $id, time()-7200);
   }
   
+  function get_email($id){
+    if(file_exists($id)){
+      $userfile = fopen($id, "r+");
+      return fread($userfile, filesize($id));
+    }else{
+      return null;
+    }
+  }
+  
   function is_authenticated($id) {
     if(file_exists($id) and file_exists($id . '.time')){
       $userfile = fopen($id, "r+");
