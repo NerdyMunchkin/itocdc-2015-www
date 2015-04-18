@@ -2,8 +2,9 @@
   function authenticated_session($passwd) {
     return hash("sha256", hash("sha256", passwd));
   }
-  include 'opendb.php';
+  
   function authenticate($email, $passwd) {
+    include 'opendb.php';
     $query = $db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
     $query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
     $query->bindParam(':password', $password, PDO::PARAM_STR, strlen($password));
