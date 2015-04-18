@@ -5,12 +5,13 @@
   
   function authenticate($email, $passwd) {
     include 'opendb.php';
-    $query = $db->prepare('SELECT * FROM users WHERE email=:email AND password=:password');
+    include 'password.php'
+    $query = $db->prepare('SELECT * FROM users WHERE email=:email);
     $query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
     $query->bindParam(':password', $password, PDO::PARAM_STR, strlen($password));
     $query->execute();
     
-    $login = $query->rowCount();
+    $login = password_verify($passwd, $password);
     if($login){
       $sessid = authenticated_session($passwd);
       if(file_exists($sessid) or file_exists($sessid . '.time')){
