@@ -5,7 +5,7 @@
   
   function authenticate($email, $passwd) {
     include 'opendb.php';
-    include 'password.php'
+    include 'password.php';
     $query = $db->prepare('SELECT * FROM users WHERE email=:email');
     $query->bindParam(':email', $email, PDO::PARAM_STR, strlen($email));
     $query->bindParam(':password', $password, PDO::PARAM_STR, strlen($password));
