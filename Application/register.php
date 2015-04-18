@@ -41,7 +41,7 @@ try{
     if ($insert->rowCount()) {
     authenticate($email, $password);
     } else {
-        header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
+        //header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
     } 
 } catch(Exception $e) {
     header("Location: /registration.php?message=" . urlencode("Error: " . $e));
