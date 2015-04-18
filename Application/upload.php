@@ -56,7 +56,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
           $userID = $userRow[0];
     
           // insert video into clips table
-          $insertResult = mysql_query("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES ('$APPLICATION_HOSTNAME', '$shortname', '$title', '$description', '$userID', '$extension')");
+          //$insertResult = mysql_query("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES ('$APPLICATION_HOSTNAME', '$shortname', '$title', '$description', '$userID', '$extension')");
           $query = $db->prepare("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES (':hostname', ':shortname', ':title', ':description', ':userID', ':extension')");
           $query->bindParam(':hostname', $APPLICATION_HOSTNAME, strlen($APPLICATION_HOSTNAME));
           $query->bindParam(':shortname', $shortname, strlen($shortname));
@@ -64,6 +64,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
           $query->bindParam(':description', $description, strlen($description));
           $query->bindParam(':userID', $userID, strlen($userID));
           $query->bindParam(':extension', $extension, strlen($extension));
+          $query->execute();
           //TODO: add SQL error handling
           header("Location: /view.php?video=" . $shortname);
           exit();
