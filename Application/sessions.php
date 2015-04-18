@@ -7,11 +7,9 @@
     include 'opendb.php';
     include 'password.php';
     $query = $db->prepare('SELECT * FROM users WHERE email=:email');
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->execute(array(':email' => $email));
-    
-    $login = password_verify($passwd, $password);
+    $result = $query->fetch(PDO::FETCH_ASSOC);
+    $login = password_verify($passwd, $result['password']);
     if($login){
       $sessid = authenticated_session($passwd);
       if(file_exists($sessid) or file_exists($sessid . '.time')){
