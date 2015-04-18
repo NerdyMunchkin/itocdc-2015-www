@@ -9,7 +9,7 @@
     $query = $db->prepare('SELECT * FROM users WHERE email=:email');
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
-    $query->execute(array(':email') => $email));
+    $query->execute(array(':email' => $email));
     
     $login = password_verify($passwd, $password);
     if($login){
