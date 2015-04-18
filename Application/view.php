@@ -40,8 +40,8 @@ try {
 
         // update view counter
         $update = $db->prepare("UPDATE clips SET views=views+1 WHERE shortname=':shortname'");
-        $update.bindParam(':shortname', $shortname, strlen($shortname));
-        $update.execute();
+        $update->bindParam(':shortname', $shortname, strlen($shortname));
+        $update->execute();
     }
     
   } catch (Exception $e) {
