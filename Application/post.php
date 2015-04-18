@@ -1,7 +1,7 @@
 <?php
   include 'config.php';
-  include 'headers.php';
-  var MAXFILESIZE = 100;
+  //include 'headers.php';
+  $MAXFILESIZE = 100;
 ?>
 <!DOCTYPE html>
 <html lang="en">
