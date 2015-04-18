@@ -1,5 +1,6 @@
 <?php
   include 'config.php';
+  include 'sessions.php';
   //include 'headers.php';
   $MAXFILESIZE = 100;
 ?>
