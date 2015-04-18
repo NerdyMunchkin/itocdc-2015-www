@@ -30,8 +30,8 @@
   }
   
   function logout($id) {
-    delete($id);
-    delete($id . '.time');
+    unlink($id);
+    unlink($id . '.time');
     setcookie("PHPSESSID", $id, time()-7200);
   }
   
