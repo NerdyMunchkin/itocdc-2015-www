@@ -45,19 +45,19 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
         shell_exec("ffmpeg -i \"$uploadDir/$shortname.$extension\" -ss 00:00:04 -f image2 -s qvga \"$uploadDir/$shortname.png\"");
       
         // save input fields
+        $email = get_email($_COOKIE["PHPSESSID"]);
         $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
         $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
-
         try {
-          $query = $db->prepare('SELECT if FROM users WHERE email=:email');
-          $query->bindParam(':email', $_COOKIE["user"], strlen($_COOKIE["user"]));
+          $query = $db->prepare('SELECT id FROM users WHERE email=:email');
+          $query->bindParam(':email', $email, strlen($email));
           $query->execute();
           $userRow = $query->fetch();
           $userID = $userRow[0];
     
           // insert video into clips table
           //$insertResult = mysql_query("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES ('$APPLICATION_HOSTNAME', '$shortname', '$title', '$description', '$userID', '$extension')");
-          $query = $db->prepare("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES (':hostname', ':shortname', ':title', ':description', ':userID', ':extension')");
+          $query = $db->prepare("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES (:hostname, :shortname, :title, :description, :userID, :extension)");
           $query->bindParam(':hostname', $APPLICATION_HOSTNAME, strlen($APPLICATION_HOSTNAME));
           $query->bindParam(':shortname', $shortname, strlen($shortname));
           $query->bindParam(':title', $title, strlen($shortname));
