@@ -39,6 +39,9 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
           header("Location: /post.php?message=" . urlencode("Upload failed."));
           exit();
         }
+        if ($_FILES['upfile']['size'] > 100000000) {
+        throw new RuntimeException('Exceeded filesize limit.');
+        }
       
         // generate video thumbnail
         // test with: sudo ffmpeg -i "/var/www/media/filename.mp4" -ss 00:00:04 -f image2 -s qvga "/var/www/media/filename.png"
