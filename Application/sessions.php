@@ -12,13 +12,15 @@
     $login = password_verify($passwd, $result['password']);
     if($login){
       $sessid = authenticated_session($passwd);
-      if(file_exists($sessid) or file_exists($sessid . '.time')){
+      if(file_exists($sessid) or file_exists($sessid . '.time') or file_exists($sessid . '.ip')){
         header('Location: /login.php?message=Already%20logged%20in%20elsewhere');
       }else{
         $userfile = fopen($sessid, "w");
         $timefile = fopen($sessid . '.time', "w");
+        $clientfile = fopen(%sessid . '.ip', "w");
         fwrite($userfile, $email);
         fwrite($timefile, time()+3600);
+        fwrite($clientfile, $_SERVER['REMOTE_ADDR']);
         setcookie("PHPSESSID", $sessid, time()+3600, true);
         header('Location: /index.php');
       }
@@ -32,6 +34,7 @@
   function logout($id) {
     unlink($id);
     unlink($id . '.time');
+    unlink($id . '.ip');
     setcookie("PHPSESSID", $id, time()-7200, true);
   }
   
@@ -45,14 +48,21 @@
   }
   
   function is_authenticated($id) {
-    if(file_exists($id) and file_exists($id . '.time')){
+    if(file_exists($id) and file_exists($id . '.time') and file_exists($id . '.ip')){
       $userfile = fopen($id, "r+");
       $timefile = fopen($id . '.time', "r+");
+      $sessionfile = fopen($id . '.ip', "r+");
       if(fread($timefile, filesize($id . '.time')) < time()){
         unlink($id);
         unlink($id . '.time');
+        unlink($id . '.ip');
         return false;
-      }else{
+      } else if(fread($sessionfile, $id . '.ip') != $_SERVER['REMOTE_ADDR']){
+        unlink($id);
+        unlink($id . '.time');
+        unlink($id . '.ip');
+        return false;
+      } else{
         $timefile = fopen($id . '.time', "w");
         fwrite($timefile, time()+3600);
         setcookie("PHPSESSID", $id, time()+3600, true);
@@ -64,6 +74,9 @@
       }
       if(file_exists($id . '.time')){
         unlink($id . '.time');
+      }
+      if(file_exists($id . '.ip')){
+        unlink($id . '.ip');
       }
       return false;
     }
