@@ -1,6 +1,7 @@
 <?php
   include 'config.php';
   include 'headers.php';
+  include 'sessions.php'
 
   // open connection to the database
   include 'opendb.php';
@@ -11,7 +12,7 @@
 
   try {
     // get clip properties
-    $query = $db->prepare("SELECT id, email FROM users WHERE username=':username'");
+    $query = $db->prepare("SELECT id, email FROM users WHERE username=:username");
     $query->bindParam(':username', $username, strlen($username));
     $query->execute();
 
@@ -100,18 +101,21 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-      <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
-        <h1>Account Information</h1>
-        <p><b>Username: </b> <?php echo $username; ?></p>
+      <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
+        <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+          <h1>Account Information</h1>
+          <p><b>Username: </b> <?php echo $username; ?></p>
+        <?php endif; ?>
       <?php endif; ?>
       <?php
         if($userID){
           echo "<h1>User Videos</h1>";
           try{
             // get user videos
-            $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=':user' ORDER BY views DESC, posted DESC");
+            $query = $db->prepare("SELECT host, title, shortname, posted, views FROM clips WHERE user=:user ORDER BY views DESC, posted DESC");
             $query->bindParam(':user', $userID);
             $postedClips = FALSE;
+            $query->execute();
             while($clipsRow = $query->fetch()){
               $postedClips = TRUE;
               $host = $clipsRow[0];
