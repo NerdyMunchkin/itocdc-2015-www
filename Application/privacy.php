@@ -1,6 +1,7 @@
 <?php
   include 'config.php';
   include 'headers.php';
+  include 'authenticate.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
