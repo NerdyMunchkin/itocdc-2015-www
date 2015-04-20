@@ -19,11 +19,11 @@
         $timefile = fopen($sessid . '.time', "w");
         fwrite($userfile, $email);
         fwrite($timefile, time()+3600);
-        setcookie("PHPSESSID", $sessid, time()+3600);
+        setcookie("PHPSESSID", $sessid, time()+3600, true);
         header('Location: /index.php');
       }
     } else {
-      setcookie("PHPSESSID", authenticated_session($passwd), time()-7200);
+      setcookie("PHPSESSID", authenticated_session($passwd), time()-7200, true);
       header('Location: /login.php?message=Login%20Failed');
     }
     include 'closedb.php';
@@ -32,7 +32,7 @@
   function logout($id) {
     unlink($id);
     unlink($id . '.time');
-    setcookie("PHPSESSID", $id, time()-7200);
+    setcookie("PHPSESSID", $id, time()-7200, true);
   }
   
   function get_email($id){
@@ -55,7 +55,7 @@
       }else{
         $timefile = fopen($id . '.time', "w");
         fwrite($timefile, time()+3600);
-        setcookie("PHPSESSID", $id, time()+3600);
+        setcookie("PHPSESSID", $id, time()+3600, true);
         return fread($userfile, filesize($id));
       }
     }else{
