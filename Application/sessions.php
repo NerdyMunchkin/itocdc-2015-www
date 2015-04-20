@@ -17,7 +17,7 @@
       }else{
         $userfile = fopen($sessid, "w");
         $timefile = fopen($sessid . '.time', "w");
-        $clientfile = fopen(%sessid . '.ip', "w");
+        $clientfile = fopen($sessid . '.ip', "w");
         fwrite($userfile, $email);
         fwrite($timefile, time()+3600);
         fwrite($clientfile, $_SERVER['REMOTE_ADDR']);
