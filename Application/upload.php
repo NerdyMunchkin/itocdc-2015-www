@@ -13,7 +13,7 @@ function generateShortName($file) {
 
 if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
     if(isset($_POST["video"]) || isset($_POST["title"]) || isset($_POST["description"])){
-        if($_FILES['upfile']['size'] > 100000000){
+        if($_FILES['video']['size'] > 100000000){
             if(is_authenticated($_COOKIE["PHPSESSID"])){
                 // get filename
                 $filename = $_FILES["video"]["name"];
