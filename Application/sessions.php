@@ -57,7 +57,7 @@
         unlink($id . '.time');
         unlink($id . '.ip');
         return false;
-      } else if(fread($sessionfile, $id . '.ip') != $_SERVER['REMOTE_ADDR']){
+      } else if(fread($sessionfile, filesize($id . '.ip')) != $_SERVER['REMOTE_ADDR']){
         unlink($id);
         unlink($id . '.time');
         unlink($id . '.ip');
