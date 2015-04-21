@@ -7,13 +7,13 @@ include 'sessions.php';
 include 'opendb.php';
 
 function generateShortName($file) {
-    return hash('sha256', fread(fopen($file, "a+"), filesize($file)));
+    return hash('sha256', fread(fopen($file, "r+"), filesize($file)));
 }
 
 
 if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
     if(isset($_POST["video"]) || isset($_POST["title"]) || isset($_POST["description"])){
-        if($_FILES["video"]["size"] > 100000000){
+        if($_FILES["video"]["size"] < 100000000){
             if(is_authenticated($_COOKIE["PHPSESSID"])){
                 // get filename
                 $filename = $_FILES["video"]["name"];
