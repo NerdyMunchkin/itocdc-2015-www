@@ -19,9 +19,9 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                 $filename = $_FILES["video"]["name"];
               
                 // generate unique shortname for upload
-                $shortname = generateShortName($_FILES["video"]["name"]);
+                $shortname = generateShortName($_FILES["video"]["tmp_name"]);
                 $extension = pathinfo($_FILES["video"]["name"], PATHINFO_EXTENSION);
-                if(file_exists("$uploadDir/$shortname.$extension")){
+                if(file_exists($uploadDir . "/" . $shortname . "." .$extension)){
                   header("Location: /post.php?message=" . urlencode("Video already posted."));
                   exit();
                 }
@@ -33,10 +33,10 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                 }
                 
                 // move file to upload directory
-                move_uploaded_file($_FILES["video"]["tmp_name"], "$uploadDir/$shortname.$extension");
+                move_uploaded_file($_FILES["video"]["tmp_name"], $uploadDir . "/" . $shortname . "." .$extension);
               
                 // check upload success
-                if(!file_exists("$uploadDir/$shortname.$extension")){
+                if(!file_exists($uploadDir . "/" . $shortname . "." .$extension)){
                   header("Location: /post.php?message=" . urlencode("Upload failed."));
                   exit();
                 }
