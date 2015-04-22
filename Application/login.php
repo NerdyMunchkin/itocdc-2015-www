@@ -78,7 +78,7 @@
      <br />
      <?php 
         if(isset($_GET["message"])) {
-          echo $_GET["message"]; 
+          echo filter_var($_GET["message"], FILTER_SANITIZE_SPECIAL_CHARS); 
         }
      ?> 
      <form name=login action="authenticate.php" method="post" onSubmit="return checkLogin();">
