@@ -11,6 +11,10 @@ try {
     $media = $mediaDir;
     $shortname = $_GET["video"];
     
+    if(!ctype_alnum($shortname)){
+    	$shortname = "";
+    }
+    
     // get clip properties
     $query = $db->prepare("SELECT host, title, description, posted, user, views, extension FROM clips WHERE shortname=:shortname");
     $query->bindParam(':shortname', $shortname, strlen($shortname));
