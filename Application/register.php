@@ -15,16 +15,16 @@ include 'opendb.php';
 
 try{
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        //header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
+        header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
         exit();
     }else if(!ctype_alnum($username)){
-        //header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
+        header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
     }else if(ctype_alnum($password)){
-        //header('Location: /registration.php?message=' . urlencode('Password must contain atleast one non-alphanumeric characters!'));
+        header('Location: /registration.php?message=' . urlencode('Password must contain atleast one non-alphanumeric characters!'));
         exit();
     }else if(strlen($password) < 8){
-        //header('Location: /registration.php?message=' . urlencode('Password too short!'));
+        header('Location: /registration.php?message=' . urlencode('Password too short!'));
         exit();
     }
 
@@ -33,7 +33,7 @@ try{
     $query->execute();
 
     if($query->rowCount() > 0) {
-        //header('Location: /registration.php?message=' . urlencode('Username taken!'));
+        header('Location: /registration.php?message=' . urlencode('Username taken!'));
         exit();
     }
     $sanitizepass = filter_var($password, FILTER_SANITIZE_EMAIL);
@@ -45,7 +45,7 @@ try{
     if ($insert->rowCount()) {
     authenticate($email, $sanitizepass);
     } else {
-        //header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
+        header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
     } 
 } catch(Exception $e) {
     header("Location: /registration.php?message=" . urlencode("Error: " . $e));
