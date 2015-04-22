@@ -20,7 +20,10 @@ try{
     }else if(!ctype_alnum($username)){
         //header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
-    }else if(strlen($password) < 6){
+    }else if(ctype_alnum($password)){
+        //header('Location: /registration.php?message=' . urlencode('Password must contain atleast one non-alphanumeric characters!'));
+        exit();
+    }else if(strlen($password) < 8){
         //header('Location: /registration.php?message=' . urlencode('Password too short!'));
         exit();
     }
