@@ -9,6 +9,10 @@
   $userID = NULL;
   $media = $mediaDir;
   $username = $_GET["username"];
+  
+  if(!ctype_alnum($username)){
+    $username = "";
+  }
 
   try {
     // get clip properties
