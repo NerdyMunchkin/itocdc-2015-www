@@ -36,13 +36,14 @@ try{
         //header('Location: /registration.php?message=' . urlencode('Username taken!'));
         exit();
     }
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $sanitizepass = filter_var($password, FILTER_SANITIZE_EMAIL);
+    $hash = password_hash($sanitizepass, PASSWORD_DEFAULT);
     $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$hash')");
     $insert->execute();
 	
     // register user
     if ($insert->rowCount()) {
-    authenticate($email, $password);
+    authenticate($email, $sanitizepass);
     } else {
         //header('Location: /registration.php?message=' . urlencode(mysql_error($conn)));
     } 
