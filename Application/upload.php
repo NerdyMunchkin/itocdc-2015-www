@@ -41,9 +41,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                   exit();
                 }
               
-                // generate video thumbnail
-                // test with: sudo ffmpeg -i "/var/www/media/filename.mp4" -ss 00:00:04 -f image2 -s qvga "/var/www/media/filename.png"
-                shell_exec("ffmpeg -i \"$uploadDir/$shortname.$extension\" -ss 00:00:04 -f image2 -s qvga \"$uploadDir/$shortname.png\"");
+               
               
                 // save input fields
                 $email = get_email($_COOKIE["PHPSESSID"]);
