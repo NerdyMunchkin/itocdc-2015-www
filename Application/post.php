@@ -134,7 +134,7 @@
      <?php 
         if(isset($_GET["message"])) {
           echo "<p>Post Failed</p>";
-          echo "<p>" . $_GET["message"] . "</p>";
+          echo "<p>" . filter_var($_GET["message"], FILTER_SANITIZE_SPECIAL_CHARS) . "</p>";
         }
      ?>
      </font>
