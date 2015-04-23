@@ -99,7 +99,7 @@
               $shortname = $clipsRow[2];
               $posted = $clipsRow[3];
               $views = $clipsRow[4];
-              echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"><img src=\"https://$host$media/$shortname.png\" /></a><p><b>$views views since <i>$posted</i></b></p></td>";
+              echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"></a><p><b>$views views since <i>$posted</i></b></p></td>";
               if($counter == 3){
                 echo "</tr><tr>";
                 $counter = 1;
