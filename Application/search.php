@@ -5,7 +5,7 @@
   include 'opendb.php'
 
   $media = $mediaDir;
-  $query = $_POST["q"]
+  $query = $_POST["q"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
