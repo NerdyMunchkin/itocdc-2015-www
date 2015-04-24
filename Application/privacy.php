@@ -2,7 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
-  include 'opendb.php'
+  include 'opendb.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,7 +96,7 @@
 	  <li>We will protect personal information by reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.</li>
 	  <li>We will make readily available to customers information about our policies and practices relating to the management of personal information.</li>
         </ul>
-        <?php include 'closedb.php' ?>
+        <?php include 'closedb.php'; ?>
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>
