@@ -61,7 +61,7 @@
     <br />
     <div class="container marketing">
      <hr class="featurette-divider">
-     <h1>Login</h1>
+     <h1>Register</h1>
      <script>
         function checkRegistration(){
          
