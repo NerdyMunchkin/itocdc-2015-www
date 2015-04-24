@@ -2,6 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
+  include 'opendb.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +55,19 @@
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
                   <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <?php $logged_in_email = is_authenticated($_COOKIE["PHPSESSID"]);
+                    $query = $db->prepare("SELECT username FROM users WHERE email=:email");
+                    $query->bindParam(':email', $logged_in_email, strlen($logged_in_email));
+                    $query->execute();
+                    if($query->rowCount() == 0){
+                      $username = NULL;
+                    } else {
+                      $userRow = $query->fetch();
+                      $username = $userRow[0];
+                    } ?>    
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
+                    <li><a href="/user.php?username=<?php echo($username); ?>">Your Profile</a></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
@@ -84,6 +96,7 @@
 	  <li>We will protect personal information by reasonable security safeguards against loss or theft, as well as unauthorized access, disclosure, copying, use or modification.</li>
 	  <li>We will make readily available to customers information about our policies and practices relating to the management of personal information.</li>
         </ul>
+        <?php include 'closedb.php' ?>
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>
