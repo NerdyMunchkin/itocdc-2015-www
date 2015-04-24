@@ -2,7 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
-  include 'opendb.php'
+  include 'opendb.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -128,7 +128,7 @@
 <p>Any claim relating to Completely Digital Clips's web site shall be governed by the laws of the State of Iowa without regard to its conflict of law provisions.</p>
 <p>We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained.</p>		
 <!--TOS end-->
-	<?php include 'closedb.php' ?>		
+	<?php include 'closedb.php'; ?>		
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>
