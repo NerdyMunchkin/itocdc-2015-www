@@ -17,12 +17,12 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
             $email = is_authenticated($_COOKIE["PHPSESSID"]);
             if($email){
                 // check disk quota
-                $query = $db->prepare('SELECT id FROM users WHERE email=:email');
+                $query = $db->prepare('SELECT id, datause FROM users WHERE email=:email');
                 $query->bindParam(':email', $email, strlen($email));
                 $query->execute();
                 $userRow = $query->fetch();
                 $userID = $userRow[0];
-                $useddisk = $userRow[DATA_COL];
+                $useddisk = $userRow[1];
                 
                 if($useddisk < 1000000000){
                     // get filename
@@ -50,9 +50,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                       header("Location: /post.php?message=" . urlencode("Upload failed."));
                       exit();
                     }
-                  
-                   
-                  
+
                     // save input fields
                     $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
                     $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
