@@ -63,6 +63,10 @@
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
+                    <li><form name=search action="search.php" method="post">
+                    <input type="text" name="q"><br />
+                    <input value="Search" type="submit">
+                    </form></li>
                   <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
