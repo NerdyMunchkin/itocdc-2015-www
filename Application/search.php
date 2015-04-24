@@ -2,7 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
-  include 'opendb.php'
+  include 'opendb.php';
 
   $media = $mediaDir;
   $query = $_POST["q"];
