@@ -6,6 +6,15 @@
 
   $media = $mediaDir;
   $query = $_POST["q"];
+
+try{ //THIS IS TEMPORARY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    if(!filter_var($query, FILTER_VALIDATE_EMAIL)){
+        header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
+        exit();
+    }
+} catch(Exception $e) {
+    header("Location: /registration.php?message=" . urlencode("Error: " . $e));
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +27,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <title>Completely Digital Clips <?php echo($query); ?></title>
+    <title>Completely Digital Clips</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
