@@ -128,7 +128,7 @@
               $posted = $clipsRow[3];
               $views = $clipsRow[4];
               echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
-              echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
+              echo "<a href=\"/view.php?video=$shortname\"></a>";
               echo "<p>$views views since $posted</p><br />";
             }
             if($postedClips == FALSE){
