@@ -73,7 +73,7 @@
                     } ?>    
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
-                    <li><a href="/user.php?username=<?php echo($userID); ?>>Your Profile</a></li>
+                    <li><a href="/user.php?username=<?php echo($userID); ?>">Your Profile</a></li>
                   <?php endif; ?>
                 <?php else: ?>
                   <li><a href="/login.php">Login</a></li>
