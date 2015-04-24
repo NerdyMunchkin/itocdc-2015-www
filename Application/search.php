@@ -2,6 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
+  include 'opendb.php'
 
   $media = $mediaDir;
 ?>
@@ -126,7 +127,7 @@
           echo "<h1>Error: $e</h1>";
         }
         
-        include 'closedb.php'
+        include 'closedb.php';
       ?>
       </table>
       </center>
