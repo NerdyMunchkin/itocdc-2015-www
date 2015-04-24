@@ -5,6 +5,7 @@
   include 'opendb.php'
 
   $media = $mediaDir;
+  $query = $_POST["q"]
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,7 +18,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <title>Completely Digital Clips</title>
+    <title>Completely Digital Clips <?php echo($query); ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
