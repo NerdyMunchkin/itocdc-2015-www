@@ -19,7 +19,12 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                 // check disk quota
                 $query = $db->prepare('SELECT id, datause FROM users WHERE email=:email');
                 $query->bindParam(':email', $email, strlen($email));
-                $query->execute();
+                try{
+                    $query->execute();
+                } catch(Exception e){
+                    header("Location: /post.php?message=" . urlencode("Error: " . $e));
+                    exit();
+                }
                 $userRow = $query->fetch();
                 $userID = $userRow[0];
                 $useddisk = $userRow[1];
@@ -55,12 +60,11 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                     $title = filter_var($_POST["title"], FILTER_SANITIZE_STRING);
                     $description = filter_var($_POST["description"], FILTER_SANITIZE_STRING);
                     try {
-                      $query = $db->prepare('SELECT id FROM users WHERE email=:email');
-                      $query->bindParam(':email', $email, strlen($email));
+                      $query = $db->prepare("UPDATE users SET datause=datause+:videosize WHERE email=:email");
+                      $query->bindParam(":videosize", $_FILES["video"]["size"]);
+                      $query->bindParam(":email", $email);
                       $query->execute();
-                      $userRow = $query->fetch();
-                      $userID = $userRow[0];
-                
+                      
                       // insert video into clips table
                       //$insertResult = mysql_query("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES ('$APPLICATION_HOSTNAME', '$shortname', '$title', '$description', '$userID', '$extension')");
                       $query = $db->prepare("INSERT INTO clips (host, shortname, title, description, user, extension) VALUES (:hostname, :shortname, :title, :description, :userID, :extension)");
