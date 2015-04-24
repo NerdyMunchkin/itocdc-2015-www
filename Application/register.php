@@ -38,7 +38,7 @@ try{
     }
     $sanitizepass = filter_var($password, FILTER_SANITIZE_EMAIL);
     $hash = password_hash($sanitizepass, PASSWORD_DEFAULT);
-    $insert = $db->prepare("INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$hash')");
+    $insert = $db->prepare("INSERT INTO users (email, username, password, datause) VALUES ('$email', '$username', '$hash', 0)");
     $insert->execute();
 	
     // register user
