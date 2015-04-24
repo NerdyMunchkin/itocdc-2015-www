@@ -21,7 +21,7 @@ if ($_FILES["video"]["error"] == UPLOAD_ERR_OK) {
                 $query->bindParam(':email', $email, strlen($email));
                 try{
                     $query->execute();
-                } catch(Exception e){
+                } catch(Exception $e){
                     header("Location: /post.php?message=" . urlencode("Error: " . $e));
                     exit();
                 }
