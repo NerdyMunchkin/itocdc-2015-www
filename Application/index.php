@@ -67,7 +67,7 @@
                       $username = NULL;
                     } else {
                       $userRow = $query->fetch();
-                      $username = $userRow[1];
+                      $username = $userRow[0];
                     } ?>    
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
