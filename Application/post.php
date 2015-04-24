@@ -2,7 +2,7 @@
   include 'config.php';
   include 'sessions.php';
   //include 'headers.php';
-  $MAXFILESIZE = 100;
+  $MAXFILESIZE = 300;
 ?>
 <!DOCTYPE html>
 <html lang="en">
