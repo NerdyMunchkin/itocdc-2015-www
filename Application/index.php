@@ -127,7 +127,7 @@
           echo "<h1>Error: $e</h1>";
         }
         
-        include 'closedb.php'
+        include 'closedb.php';
       ?>
       </table>
       </center>
