@@ -173,7 +173,7 @@ try {
       <h1>Sorry, we couldn't find that clip :(</h1>
       <?php endif; ?>
       </center>
-      <?php include 'closedb.php' ?>
+      <?php include 'closedb.php'; ?>
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>
