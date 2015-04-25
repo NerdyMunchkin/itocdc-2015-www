@@ -22,7 +22,7 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 header('Location: /login.php?message=' . urlencode(checkRequests("login", 30)));
-
+exit(); 
 logRequest("login");
 
 authenticate($email, $password);
