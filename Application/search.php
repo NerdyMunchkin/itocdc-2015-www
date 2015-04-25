@@ -95,7 +95,7 @@
       <hr class="featurette-divider">
       <center>
         <h1>Results for &quot;<?php echo($search); ?>&quot;</h1>
-        <table style="width:100%;"><tr><td style="width:50%;">
+        <table style="width:100%;"><tr><td style="width:50%; vertical-align:top;">
         <table style="width:100%;">
         <?php
 
@@ -131,7 +131,7 @@
         ?>
         </table>
         </td>
-        <td style="width:50%;">
+        <td style="width:50%; vertical-align:top;">
         <table style="width:100%;">
         <?php
         try{
