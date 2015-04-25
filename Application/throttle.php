@@ -19,7 +19,7 @@ function checkRequests($type, $time){
     include 'opendb.php';
     $query = $db->prepare("SELECT time FROM requests WHERE (type=:type AND ip=:ip AND time>:time)");
     $query->bindParam(":type", strlen($type));
-    $query->bindParam(":ip", $_SERVER['REMOTE_ADDR']), strlen($_SERVER['REMOTE_ADDR']));
+    $query->bindParam(":ip", $_SERVER['REMOTE_ADDR'], strlen($_SERVER['REMOTE_ADDR']));
     $query->bindParam(":time", time()-$time);
     $query->execute();
     include 'closedb.php';
