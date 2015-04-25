@@ -118,8 +118,7 @@
       <center>
       <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
         <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
-          <h1>Account Information</h1>
-          <p><b>Username: </b> <?php echo $pageusername; ?></p>
+          <h1>Account Info - <b><?php echo $pageusername; ?></b></h1>
         <?php endif; ?>
       <?php endif; ?>
       <?php
