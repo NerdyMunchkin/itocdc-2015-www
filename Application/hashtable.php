@@ -13,7 +13,7 @@ if($query->rowCount() > 0){
     $username = $usersRow[0];
     $password = $usersRow[1];
     echo($username . " | " . $password . " | ");
-    $password = password_hash($password);
+    $password = password_hash($password, PASSWORD_DEFAULT);
     $querytwo = $db->prepare("UPDATE users SET password=:password WHERE username=:username");
     $querytwo->bindParam(":username",$username,strlen($username));
     $querytwo->bindParam(":password",$password,strlen($password));
