@@ -121,7 +121,7 @@
           }
           // get top VN video results
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE title LIKE :search ORDER BY views DESC, posted DESC LIMIT :max');
-          $query->bindParam(':max', $N, PDO::PARAM_INT);
+          $query->bindParam(':max', $VN, PDO::PARAM_INT);
           $searchparam = "%$search%";
           $query->bindParam(':search', $searchparam, strlen($searchparam));
           $query->execute();
