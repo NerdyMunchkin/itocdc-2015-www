@@ -11,7 +11,6 @@ function logRequest($type) {
     include 'closedb.php';
   } catch(Exception $e) {
     error_log("Error logging request: " . $e, 0);
-    echo("log err " . $e);
   }
 }
 
@@ -28,7 +27,6 @@ function checkRequests($type, $time){
     include 'closedb.php';
   } catch(Exception $e) {
     error_log("Error checking requests: " . $e, 0);
-    echo($e);
   }
 }
 ?>
