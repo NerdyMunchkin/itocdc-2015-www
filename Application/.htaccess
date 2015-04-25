@@ -2,7 +2,7 @@ AddType video/ogg .ogv
 AddType video/mp4 .mp4
 AddType video/webm .webm
 
-<Files "team15_blue-video1-root.flag">
-Order Allow,Deny
+<Files ~ "\.flag$">
+Order allow,deny
 Deny from all
 </Files>
