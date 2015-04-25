@@ -105,7 +105,7 @@
         $VN = 10;
         try{
           // get top VN video results
-          echo("<h1>Videos</h1>");
+          echo("<center><h1>Videos</h1></center>");
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE title LIKE :search ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $VN, PDO::PARAM_INT);
           $searchparam = "%$search%";
@@ -136,7 +136,7 @@
         <?php
         try{
           // get top UN user results
-          echo("<h1>Users</h1>");
+          echo("<center><h1>Users</h1></center>");
           $query = $db->prepare('SELECT username FROM users WHERE username LIKE :search ORDER BY username DESC LIMIT :max');
           $query->bindParam(':max', $UN, PDO::PARAM_INT);
           $searchparam = "%$search%";
@@ -156,8 +156,9 @@
           echo "<h1>Error: $e</h1>";
         }
         
-        include 'closedb.php';
+      include 'closedb.php';
       ?>
+      </table>
       </td>
       </tr>
       </table>
