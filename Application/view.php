@@ -52,7 +52,6 @@ try {
   } catch (Exception $e) {
     $clip = NULL;
   }
-  include 'closedb.php'
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,6 +173,7 @@ try {
       <h1>Sorry, we couldn't find that clip :(</h1>
       <?php endif; ?>
       </center>
+      include 'closedb.php'
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>
