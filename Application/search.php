@@ -94,7 +94,7 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-        <h1>Results for &quot;<?php echo($search); ?>&quot;</h1>
+        <h1>User results for &quot;<?php echo($search); ?>&quot;</h1>
         <table style="width:100%;">
         <?php
 
@@ -119,6 +119,11 @@
           } else {
             echo "<h1>No users found! :(</h1>";
           }
+          ?>
+          </table>
+          <h1>Video results for &quot;<?php echo($search); ?>&quot;</h1>
+          <table style="width:100%;">
+          <?php
           // get top VN video results
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE title LIKE :search ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $VN, PDO::PARAM_INT);
