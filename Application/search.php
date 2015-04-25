@@ -94,7 +94,7 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-        <h1>User results for &quot;<?php echo($search); ?>&quot;</h1>
+        <h1>Results for &quot;<?php echo($search); ?>&quot;</h1>
         <table style="width:100%;"><tr><td style="width:50%;">
         <table style="width:100%;">
         <?php
@@ -104,30 +104,8 @@
         $UN = 15;
         $VN = 10;
         try{
-          // get top UN user results
-          $query = $db->prepare('SELECT username FROM users WHERE username LIKE :search ORDER BY username DESC LIMIT :max');
-          $query->bindParam(':max', $UN, PDO::PARAM_INT);
-          $searchparam = "%$search%";
-          $query->bindParam(':search', $searchparam, strlen($searchparam));
-          $query->execute();
-          if($query->rowCount() > 0){
-            echo "<tr>";
-            while($usersRow = $query->fetch()){
-              $username = $usersRow[0];
-              echo "<td align=\"center\"><h2><a href=\"/user.php?username=$username\">$username</a></h2></td></tr><tr>";
-            }
-            echo "</tr>";
-          } else {
-            echo "<h1>No users found! :(</h1>";
-          }
-          ?>
-          </table>
-          </td>
-          <h1>Video results for &quot;<?php echo($search); ?>&quot;</h1>
-          <td style="width:50%;">
-          <table style="width:100%;">
-          <?php
           // get top VN video results
+          echo("<h1>Videos</h1>");
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE title LIKE :search ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $VN, PDO::PARAM_INT);
           $searchparam = "%$search%";
@@ -146,6 +124,33 @@
             echo "</tr>";
           } else {
             echo "<h1>No videos found! :(</h1>";
+          }
+        } catch(Exception $e){
+          echo "<h1>Error: $e</h1>";
+        }
+        ?>
+        </table>
+        </td>
+        <td style="width:50%;">
+        <table style="width:100%;">
+        <?php
+        try{
+          // get top UN user results
+          echo("<h1>Users</h1>");
+          $query = $db->prepare('SELECT username FROM users WHERE username LIKE :search ORDER BY username DESC LIMIT :max');
+          $query->bindParam(':max', $UN, PDO::PARAM_INT);
+          $searchparam = "%$search%";
+          $query->bindParam(':search', $searchparam, strlen($searchparam));
+          $query->execute();
+          if($query->rowCount() > 0){
+            echo "<tr>";
+            while($usersRow = $query->fetch()){
+              $username = $usersRow[0];
+              echo "<td align=\"center\"><h2><a href=\"/user.php?username=$username\">$username</a></h2></td></tr><tr>";
+            }
+            echo "</tr>";
+          } else {
+            echo "<h1>No users found! :(</h1>";
           }
         } catch(Exception $e){
           echo "<h1>Error: $e</h1>";
