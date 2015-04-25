@@ -20,8 +20,7 @@ function checkRequests($type, $time){
     $query = $db->prepare("SELECT time FROM requests WHERE (type=:type AND ip=:ip AND time>:time)");
     $query->bindParam(":type", strlen($type));
     $query->bindParam(":ip", $_SERVER['REMOTE_ADDR'], strlen($_SERVER['REMOTE_ADDR']));
-    $thing = PDO::PARAM_INT;
-    $query->bindParam(":time", time()-$time, $thing);
+    $query->bindParam(":time", time()-$time, PDO::PARAM_INT);
     $query->execute();
     include 'closedb.php';
     return $query->rowCount();
