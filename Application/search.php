@@ -113,7 +113,7 @@
             echo "<tr>";
             while($usersRow = $query->fetch()){
               $username = $usersRow[0];
-              echo "<td align=\"center\"><h2><a href=\"/user.php?username=$username">$username</a></h2></td></tr><tr>";
+              echo "<td align=\"center\"><h2><a href=\"/user.php?username=$username\">$username</a></h2></td></tr><tr>";
             }
             echo "</tr>";
           } else {
