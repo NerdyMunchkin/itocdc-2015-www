@@ -8,7 +8,7 @@ include 'password.php';
 // get POST information from login form
 $email=$_POST["email"];
 $username=$_POST["username"];
-$confirmpassword=$_POST["confirm-password"]
+$confirmpassword=$_POST["confirm-password"];
 $password=$_POST["password"];
 
 // open connection to the database
