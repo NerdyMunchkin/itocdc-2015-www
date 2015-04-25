@@ -6,15 +6,9 @@
 
   $media = $mediaDir;
   $query = $_POST["q"];
-
-try{ //THIS IS TEMPORARY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    if(!filter_var($query, FILTER_VALIDATE_EMAIL)){
-        header('Location: /registration.php?message=' . urlencode('Email provided was invalid!'));
-        exit();
-    }
-} catch(Exception $e) {
-    header("Location: /registration.php?message=" . urlencode("Error: " . $e));
-}
+  
+  $query = filter_var($query, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -100,17 +94,18 @@ try{ //THIS IS TEMPORARY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-        <h1>Trending Videos</h1>
+        <h1>Results for &quot;<?php echo($query); ?>&quot;</h1>
         <table style="width:100%;">
         <?php
 
         include 'opendb.php';
 
-        $N = 60;
+        $N = 10;
         try{
-          // get top N trending videos
-          $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips ORDER BY views DESC, posted DESC LIMIT :max');
+          // get top N results
+          $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE (title LIKE '%' . :query . '%') ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $N, PDO::PARAM_INT);
+          $query->bindParam(':query', $query, strlen($query));
           $query->execute();
           if($query->rowCount() > 0){
             $counter = 1;
@@ -121,17 +116,11 @@ try{ //THIS IS TEMPORARY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
               $shortname = $clipsRow[2];
               $posted = $clipsRow[3];
               $views = $clipsRow[4];
-              echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"></a><p><b>$views views since <i>$posted</i></b></p></td>";
-              if($counter == 3){
-                echo "</tr><tr>";
-                $counter = 1;
-              } else {
-                $counter = $counter + 1;
-              }
+              echo "<td align=\"center\"><a href=\"/view.php?video=$shortname\"><h2>$title</h2></a><a href=\"/view.php?video=$shortname\"></a><p><b>$views views since <i>$posted</i></b></p></td></tr><tr>";
             }
             echo "</tr>";
           } else {
-            echo "<h1>Coming soon!</h1>";
+            echo "<h1>No results found! :(</h1>";
           }
         } catch(Exception $e){
           echo "<h1>Error: $e</h1>";
