@@ -8,16 +8,16 @@
 
   $userID = NULL;
   $media = $mediaDir;
-  $username = $_GET["username"];
+  $pageusername = $_GET["username"];
   
-  if(!ctype_alnum($username)){
-    $username = "";
+  if(!ctype_alnum($pageusername)){
+    $pageusername = "";
   }
 
   try {
     // get clip properties
     $query = $db->prepare("SELECT id, email FROM users WHERE username=:username");
-    $query->bindParam(':username', $username, strlen($username));
+    $query->bindParam(':username', $pageusername, strlen($pageusername));
     $query->execute();
 
     if($query->rowCount() == 0){
@@ -119,7 +119,7 @@
       <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
         <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
           <h1>Account Information</h1>
-          <p><b>Username: </b> <?php echo $username; ?></p>
+          <p><b>Username: </b> <?php echo $pageusername; ?></p>
         <?php endif; ?>
       <?php endif; ?>
       <?php
