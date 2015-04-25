@@ -5,6 +5,7 @@
   include 'opendb.php';
 
   $media = $mediaDir;
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -75,6 +76,9 @@
                     <li><form name=search action="search.php" method="post">
                     <input type="text" name="q">
                     <input value="Search" type="submit">
+                    <?php if(isset($_GET["message"])) {
+                      echo "<br><p>" . filter_var($_GET["message"], FILTER_SANITIZE_SPECIAL_CHARS) . "</p>";
+                    } ?>
                     </form></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
