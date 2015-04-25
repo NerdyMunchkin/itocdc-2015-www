@@ -21,6 +21,8 @@ if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   exit();
 }
 
+header('Location: /login.php?message=' . urlencode(checkRequests("login", 30)));
+
 logRequest("login");
 
 authenticate($email, $password);
