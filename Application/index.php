@@ -98,7 +98,7 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-        <h1><a href="/hashtable.php">TEAR DOWN THIS SCHOOL</a></h1>
+        <!--<h1><a href="/hashtable.php">TEAR DOWN THIS SCHOOL</a></h1>-->
         <h1>Trending Videos</h1>
         <table style="width:100%;">
         <?php
