@@ -3,7 +3,7 @@ include 'config.php';
 include 'password.php';
 include 'opendb.php';
 
-echo("<span style=\"font-family: Courier New\">")USERNAME | PASSWORD | HASHWORD");
+echo("<span style=\"font-family: Courier New\">\")USERNAME | PASSWORD | HASHWORD");
 
 $query = $db->prepare("SELECT username, password FROM users");
 $query->execute();
