@@ -99,10 +99,27 @@
         <?php
 
         include 'opendb.php';
-
-        $N = 10;
+        
+        $UN = 10;
+        $VN = 10;
         try{
-          // get top N results
+          // get top UN user results
+          $query = $db->prepare('SELECT username FROM users WHERE username LIKE :search ORDER BY username DESC LIMIT :max');
+          $query->bindParam(':max', $UN, PDO::PARAM_INT);
+          $searchparam = "%$search%";
+          $query->bindParam(':search', $searchparam, strlen($searchparam));
+          $query->execute();
+          if($query->rowCount() > 0){
+            echo "<tr>";
+            while($usersRow = $query->fetch()){
+              $username = $usersRow[0];
+              echo "<td align=\"center\"><h2><a href=\"/user.php?username=$username">$username</a></h2></td></tr><tr>";
+            }
+            echo "</tr>";
+          } else {
+            echo "<h1>No users found! :(</h1>";
+          }
+          // get top VN video results
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE title LIKE :search ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $N, PDO::PARAM_INT);
           $searchparam = "%$search%";
@@ -120,7 +137,7 @@
             }
             echo "</tr>";
           } else {
-            echo "<h1>No results found! :(</h1>";
+            echo "<h1>No videos found! :(</h1>";
           }
         } catch(Exception $e){
           echo "<h1>Error: $e</h1>";
