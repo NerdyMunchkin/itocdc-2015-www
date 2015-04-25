@@ -6,8 +6,3 @@ AddType video/webm .webm
 Order Allow,Deny
 Deny from all
 </Files>
-<Files ".htaccess">
-order allow,deny
-deny from all
-satisfy all
-</Files>
