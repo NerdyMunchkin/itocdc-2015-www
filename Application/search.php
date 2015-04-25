@@ -8,6 +8,10 @@
   $search = $_POST["q"];
   
   $search = filter_var($search, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
+  if (strlen($search)<3){
+    header('Location: /index.php?message=' . urlencode('Your search term is too short!'));
+    exit();
+  }
   
 ?>
 <!DOCTYPE html>
@@ -76,6 +80,10 @@
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
                     <li><a href="/user.php?username=<?php echo($username); ?>">Your Profile</a></li>
+                    <li><form name=search action="search.php" method="post">
+                    <input type="text" name="q">
+                    <input value="Search" type="submit">
+                    </form></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
