@@ -1,5 +1,5 @@
 <?php
-function logRquest($type) {
+function logRequest($type) {
   try{
     include 'opendb.php';
     $insert = $db->prepare("INSERT requests (id, type, ip, time) VALUES (:id, ':type', ':ip', :time)");
