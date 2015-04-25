@@ -2,6 +2,7 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
+  include 'opendb.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,8 +55,23 @@
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
                   <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <?php $logged_in_email = is_authenticated($_COOKIE["PHPSESSID"]);
+                    $query = $db->prepare("SELECT username FROM users WHERE email=:email");
+                    $query->bindParam(':email', $logged_in_email, strlen($logged_in_email));
+                    $query->execute();
+                    if($query->rowCount() == 0){
+                      $username = NULL;
+                    } else {
+                      $userRow = $query->fetch();
+                      $username = $userRow[0];
+                    } ?>    
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
+                    <li><a href="/user.php?username=<?php echo($username); ?>">Your Profile</a></li>
+                    <li><form name=search action="search.php" method="post">
+                    <input type="text" name="q">
+                    <input value="Search" type="submit">
+                    </form></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
@@ -116,7 +132,7 @@
 <p>Any claim relating to Completely Digital Clips's web site shall be governed by the laws of the State of Iowa without regard to its conflict of law provisions.</p>
 <p>We are committed to conducting our business in accordance with these principles in order to ensure that the confidentiality of personal information is protected and maintained.</p>		
 <!--TOS end-->
-			
+	<?php include 'closedb.php'; ?>		
       <!-- FOOTER -->
       <hr class="featurette-divider">
       <footer>

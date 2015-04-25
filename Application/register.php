@@ -8,6 +8,7 @@ include 'password.php';
 // get POST information from login form
 $email=$_POST["email"];
 $username=$_POST["username"];
+$confirmpassword=["confirm-password"]
 $password=$_POST["password"];
 
 // open connection to the database
@@ -26,6 +27,9 @@ try{
     }else if(strlen($password) < 8){
         header('Location: /registration.php?message=' . urlencode('Password too short!'));
         exit();
+    }else if($password != $confirmpassword){
+    	header('Location: /registration.php?message=' . urlencode('Passwords do not match!'));
+    	exit();
     }
 
     $query = $db->prepare("SELECT username FROM users WHERE username=':username'");

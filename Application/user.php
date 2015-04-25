@@ -8,16 +8,16 @@
 
   $userID = NULL;
   $media = $mediaDir;
-  $username = $_GET["username"];
+  $pageusername = $_GET["username"];
   
-  if(!ctype_alnum($username)){
-    $username = "";
+  if(!ctype_alnum($pageusername)){
+    $pageusername = "";
   }
 
   try {
     // get clip properties
     $query = $db->prepare("SELECT id, email FROM users WHERE username=:username");
-    $query->bindParam(':username', $username, strlen($username));
+    $query->bindParam(':username', $pageusername, strlen($pageusername));
     $query->execute();
 
     if($query->rowCount() == 0){
@@ -85,8 +85,23 @@
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
                   <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <?php $logged_in_email = is_authenticated($_COOKIE["PHPSESSID"]);
+                    $query = $db->prepare("SELECT username FROM users WHERE email=:email");
+                    $query->bindParam(':email', $logged_in_email, strlen($logged_in_email));
+                    $query->execute();
+                    if($query->rowCount() == 0){
+                      $username = NULL;
+                    } else {
+                      $userRow = $query->fetch();
+                      $username = $userRow[0];
+                    } ?>    
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
+                    <li><a href="/user.php?username=<?php echo($username); ?>">Your Profile</a></li>
+                    <li><form name=search action="search.php" method="post">
+                    <input type="text" name="q">
+                    <input value="Search" type="submit">
+                    </form></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
@@ -107,8 +122,7 @@
       <center>
       <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
         <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
-          <h1>Account Information</h1>
-          <p><b>Username: </b> <?php echo $username; ?></p>
+          <h1>Account Info - <b><?php echo $pageusername; ?></b></h1>
         <?php endif; ?>
       <?php endif; ?>
       <?php
@@ -128,7 +142,7 @@
               $posted = $clipsRow[3];
               $views = $clipsRow[4];
               echo "<a href=\"/view.php?video=$shortname\"><h2>$title</h2></a>";
-              echo "<a href=\"/view.php?video=$shortname\"><img src=\"http://$host$media/$shortname.png\" /></a>";
+              echo "<a href=\"/view.php?video=$shortname\"></a>";
               echo "<p>$views views since $posted</p><br />";
             }
             if($postedClips == FALSE){

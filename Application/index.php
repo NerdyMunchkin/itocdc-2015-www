@@ -2,8 +2,10 @@
   include 'config.php';
   include 'headers.php';
   include 'sessions.php';
+  include 'opendb.php';
 
   $media = $mediaDir;
+  
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,8 +60,26 @@
                 <li><a href="/index.php">Home</a></li>
                 <?php if(isset($_COOKIE["PHPSESSID"])): ?> 
                   <?php if(is_authenticated($_COOKIE["PHPSESSID"])): ?>
+                    <?php $logged_in_email = is_authenticated($_COOKIE["PHPSESSID"]);
+                    $query = $db->prepare("SELECT username FROM users WHERE email=:email");
+                    $query->bindParam(':email', $logged_in_email, strlen($logged_in_email));
+                    $query->execute();
+                    if($query->rowCount() == 0){
+                      $username = NULL;
+                    } else {
+                      $userRow = $query->fetch();
+                      $username = $userRow[0];
+                    } ?>    
                     <li><a href="/post.php">Post Video</a></li>
                     <li><a href="/logout.php">Logout</a></li>
+                    <li><a href="/user.php?username=<?php echo($username); ?>">Your Profile</a></li>
+                    <li><form name=search action="search.php" method="post">
+                    <input type="text" name="q">
+                    <input value="Search" type="submit">
+                    <?php if(isset($_GET["message"])) {
+                      echo "<br><p>" . filter_var($_GET["message"], FILTER_SANITIZE_SPECIAL_CHARS) . "</p>";
+                    } ?>
+                    </form></li>
                   <?php else: ?>
                     <li><a href="/login.php">Login</a></li>
                     <li><a href="/registration.php">Register</a></li>
@@ -115,7 +135,7 @@
           echo "<h1>Error: $e</h1>";
         }
         
-        include 'closedb.php'
+        include 'closedb.php';
       ?>
       </table>
       </center>
