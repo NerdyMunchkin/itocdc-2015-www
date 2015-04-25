@@ -95,12 +95,13 @@
       <hr class="featurette-divider">
       <center>
         <h1>User results for &quot;<?php echo($search); ?>&quot;</h1>
+        <table style="width:100%;"><tr><td style="width:50%;">
         <table style="width:100%;">
         <?php
 
         include 'opendb.php';
         
-        $UN = 10;
+        $UN = 15;
         $VN = 10;
         try{
           // get top UN user results
@@ -121,7 +122,9 @@
           }
           ?>
           </table>
+          </td>
           <h1>Video results for &quot;<?php echo($search); ?>&quot;</h1>
+          <td style="width:50%;">
           <table style="width:100%;">
           <?php
           // get top VN video results
@@ -150,6 +153,8 @@
         
         include 'closedb.php';
       ?>
+      </td>
+      </tr>
       </table>
       </center>
       <!-- FOOTER -->
