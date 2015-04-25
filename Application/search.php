@@ -9,12 +9,8 @@
   
   $search = filter_var($search, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
   if (strlen($search)<3){
-    header('Location: /search.php?message=' . urlencode('Your search term is too short!'));
+    header('Location: /index.php?message=' . urlencode('Your search term is too short!'));
     exit();
-  }
-  
-  if(isset($_GET["message"])) {
-    echo "<p>" . filter_var($_GET["message"], FILTER_SANITIZE_SPECIAL_CHARS) . "</p>";
   }
   
 ?>
