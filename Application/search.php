@@ -105,7 +105,7 @@
           // get top N results
           $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE (title LIKE '*' . :search . '*') ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $N, PDO::PARAM_INT);
-          $query->bindParam(':query', $search, strlen($search));
+          $query->bindParam(':search', $search, strlen($search));
           $query->execute();
           if($query->rowCount() > 0){
             $counter = 1;
