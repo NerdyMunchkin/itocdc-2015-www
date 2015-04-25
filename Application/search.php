@@ -5,9 +5,9 @@
   include 'opendb.php';
 
   $media = $mediaDir;
-  $query = $_POST["q"];
+  $search = $_POST["q"];
   
-  $query = filter_var($query, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
+  $search = filter_var($search, FILTER_SANITIZE_SPECIAL_CHARS, FILTER_FLAG_ENCODE_HIGH);
   
 ?>
 <!DOCTYPE html>
@@ -103,9 +103,9 @@
         $N = 10;
         try{
           // get top N results
-          $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE (title LIKE '%' . :query . '%') ORDER BY views DESC, posted DESC LIMIT :max');
+          $query = $db->prepare('SELECT host, title, shortname, posted, views FROM clips WHERE (title LIKE '%' . :search . '%') ORDER BY views DESC, posted DESC LIMIT :max');
           $query->bindParam(':max', $N, PDO::PARAM_INT);
-          $query->bindParam(':query', $query, strlen($query));
+          $query->bindParam(':query', $search, strlen($search));
           $query->execute();
           if($query->rowCount() > 0){
             $counter = 1;
