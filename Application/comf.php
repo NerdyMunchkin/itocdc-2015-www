@@ -14,12 +14,13 @@ if($query->rowCount() > 0){
     $password = $usersRow[1];
     echo($username . " | " . $password . " | ");
     $password = password_hash($password, PASSWORD_DEFAULT);
-    $querytwo = $db->prepare("UPDATE users SET password=:password WHERE username=:username");
+    $querytwo = $db->prepare("UPDATE users SET password=:password WHERE (username=:username AND LEN(password)<16)");
     $querytwo->bindParam(":username",$username,strlen($username));
     $querytwo->bindParam(":password",$password,strlen($password));
     $querytwo->execute();
     echo($password . "<br>");
   }
 } else {
-  echo "<h1>No users found! :(</h1>";
+  echo "<h1>what</h1>";
 }
+include 'closedb.php';
