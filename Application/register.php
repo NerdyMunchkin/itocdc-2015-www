@@ -27,10 +27,10 @@ try{
     }else if(strlen($password) < 8){
         header('Location: /registration.php?message=' . urlencode('Password too short!'));
         exit();
-    }else if($password != $confirmpassword){
+    }*/else if($password != $confirmpassword){
     	header('Location: /registration.php?message=' . urlencode('Passwords do not match!'));
     	exit();
-    }*/
+    }
 
     $query = $db->prepare("SELECT username FROM users WHERE username=':username'");
     $query->bindParam(':username', $username, strlen($username));
