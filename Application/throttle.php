@@ -24,7 +24,8 @@ function checkRequests($type, $time){
     $query->bindParam(":time", $pasttime, PDO::PARAM_INT);
     $query->execute();
     include 'closedb.php';
-    return $query->rowCount();
+    $VARIABLE = $query->rowCount();
+    return $VARIABLE;
   } catch(Exception $e) {
     error_log("Error checking requests: " . $e, 0);
   }
