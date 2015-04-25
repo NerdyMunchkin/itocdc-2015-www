@@ -16,7 +16,7 @@ include 'throttle.php';
 if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
   header('Location: /login.php?message=Invalid%20input');
   exit();
-} else if(checkRequests("login", 10) > 3) {
+} else if(checkRequests("login", 30) > 3) {
   header('Location: /login.php?message=' . urlencode("Too many attempts, just wait a few seconds"));
   exit();
 }
