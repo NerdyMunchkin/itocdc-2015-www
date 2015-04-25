@@ -94,7 +94,7 @@
     <div class="container marketing">
       <hr class="featurette-divider">
       <center>
-        <h1>Results for &quot;<?php echo($query); ?>&quot;</h1>
+        <h1>Results for &quot;<?php echo($search); ?>&quot;</h1>
         <table style="width:100%;">
         <?php
 
