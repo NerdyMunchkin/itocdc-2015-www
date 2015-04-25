@@ -21,7 +21,7 @@ try{
     }else if(!ctype_alnum($username)){
         header('Location: /registration.php?message=' . urlencode('Username may only contain alphanumeric characters!'));
         exit();
-    }else if(ctype_alnum($password)){
+    }/*else if(ctype_alnum($password)){
         header('Location: /registration.php?message=' . urlencode('Password must contain atleast one non-alphanumeric characters!'));
         exit();
     }else if(strlen($password) < 8){
@@ -30,7 +30,7 @@ try{
     }else if($password != $confirmpassword){
     	header('Location: /registration.php?message=' . urlencode('Passwords do not match!'));
     	exit();
-    }
+    }*/
 
     $query = $db->prepare("SELECT username FROM users WHERE username=':username'");
     $query->bindParam(':username', $username, strlen($username));
